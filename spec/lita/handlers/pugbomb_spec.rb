@@ -7,7 +7,7 @@ describe Lita::Handlers::Pugbomb, lita_handler: true do
   it { routes_command("how many pugs are there").to :count }
 
   describe "#pug" do
-    let(:pug) { {pug: "http://26.media.tumblr.com/tumblr_lomvroWFOE1qaa50yo1_500.jpg"} }
+    let(:pug) { '{"pug": "http://26.media.tumblr.com/tumblr_lomvroWFOE1qaa50yo1_500.jpg"}' }
     before do
       allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/pug").and_return(double("Faraday::Response", status: 200, body: pug))
     end
@@ -19,9 +19,9 @@ describe Lita::Handlers::Pugbomb, lita_handler: true do
   end
 
   describe "#bomb" do
-    let(:bomb) { {pugs: ["http://28.media.tumblr.com/tumblr_ltef3eghZ71qb08qmo1_500.jpg","http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg"]} }
+    let(:bomb) { '{"pugs": ["http://28.media.tumblr.com/tumblr_ltef3eghZ71qb08qmo1_500.jpg","http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg"]}' }
     before do
-      allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/pug?count=2").and_return(double("Faraday::Response", status: 200, body: bomb))
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/bomb", count: "2").and_return(double("Faraday::Response", status: 200, body: bomb))
     end
 
     it "replies with n pugs" do
@@ -34,7 +34,7 @@ describe Lita::Handlers::Pugbomb, lita_handler: true do
   end
 
   describe "#count" do
-    let(:count) { {pug_count: 298} }
+    let(:count) { '{"pug_count": 298}' }
     before do
       allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/count").and_return(double("Faraday::Response", status: 200, body: count))
     end
