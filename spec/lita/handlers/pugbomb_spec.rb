@@ -9,7 +9,7 @@ describe Lita::Handlers::Pugbomb, lita_handler: true do
   describe "#pug" do
     let(:pug) { '{"pug": "http://26.media.tumblr.com/tumblr_lomvroWFOE1qaa50yo1_500.jpg"}' }
     before do
-      allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/pug").and_return(double("Faraday::Response", status: 200, body: pug))
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/random").and_return(double("Faraday::Response", status: 200, body: pug))
     end
 
     it "replies with a single pug" do

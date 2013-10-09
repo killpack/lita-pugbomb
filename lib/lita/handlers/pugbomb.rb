@@ -10,7 +10,7 @@ module Lita
       BASE_URL = "http://pugme.herokuapp.com"
 
       def pug(response)
-        data = MultiJson.load(http.get(BASE_URL + "/pug").body)
+        data = MultiJson.load(http.get(BASE_URL + "/random").body)
         response.reply data['pug']
       end
 
