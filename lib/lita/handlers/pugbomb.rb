@@ -28,5 +28,6 @@ module Lita
         response.reply "There are #{pug_count} pugs."
       end
     end
+    Lita.register_handler(Pugbomb)
   end
 end
