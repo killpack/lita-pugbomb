@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Lita::Handlers::Pugbomb, lita_handler: true do
   it { routes_command("pug me").to :pug }
   it { routes_command("pug bomb").to :bomb }
+  it { routes_command("pugbomb").to :bomb }
   it { routes_command("pug bomb 10").to :bomb }
   it { routes_command("how many pugs are there").to :count }
 

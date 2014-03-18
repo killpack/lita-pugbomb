@@ -4,7 +4,7 @@ module Lita
   module Handlers
     class Pugbomb < Handler
       route(/\bpug me\b/i, :pug, command: true, help: { "pug me" => "Display a single pug" })
-      route(/\bpug bomb( (\d+))?/i, :bomb, command: true, help: { "pug bomb" => "Display five pugs", "pug bomb N" => "Display N pugs" })
+      route(/\bpug ?bomb( (\d+))?/i, :bomb, command: true, help: { "pug bomb" => "Display five pugs", "pug bomb N" => "Display N pugs" })
       route(/how many pugs are there/i, :count, command: true, help: { "how many pugs are there" => "Gets the current number of pugs" })
 
       BASE_URL = "http://pugme.herokuapp.com"

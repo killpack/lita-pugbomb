@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-pugbomb"
-  spec.version       = "1.0.0"
+  spec.version       = "1.0.1"
   spec.authors       = ["Jordan Killpack"]
   spec.email         = ["jordan.killpack@gatech.edu"]
   spec.description   = %q{Lita handler for pug bombs}
