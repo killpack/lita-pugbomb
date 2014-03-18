@@ -14,7 +14,7 @@ gem "lita-pugbomb"
 ### Usage
 `Lita: pug me` - display a single pug.
 
-`Lita: pug bomb` - display five pugs.
+`Lita: pug bomb` - display five pugs. Alternate syntax: `Lita: pugbomb`
 
 `Lita: pug bomb n` - display n pugs, where n is an integer.
 
