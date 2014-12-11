@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Lita::Handlers::Pugbomb, lita_handler: true do
-  it { routes_command("pug me").to :pug }
-  it { routes_command("pug bomb").to :bomb }
-  it { routes_command("pugbomb").to :bomb }
-  it { routes_command("pug bomb 10").to :bomb }
-  it { routes_command("how many pugs are there").to :count }
+  it { is_expected.to route_command("pug me").to :pug }
+  it { is_expected.to route_command("pug bomb").to :bomb }
+  it { is_expected.to route_command("pugbomb").to :bomb }
+  it { is_expected.to route_command("pug bomb 10").to :bomb }
+  it { is_expected.to route_command("how many pugs are there").to :count }
 
   describe "#pug" do
     let(:pug) { '{"pug": "http://26.media.tumblr.com/tumblr_lomvroWFOE1qaa50yo1_500.jpg"}' }
