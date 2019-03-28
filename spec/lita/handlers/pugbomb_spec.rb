@@ -1,3 +1,4 @@
+require 'json'
 require 'spec_helper'
 
 describe Lita::Handlers::Pugbomb, lita_handler: true do
@@ -34,6 +35,61 @@ describe Lita::Handlers::Pugbomb, lita_handler: true do
     end
   end
 
+  describe "#bomb with limit" do
+    let(:bomb) do
+      {
+        pugs: [
+          "http://28.media.tumblr.com/tumblr_ltef3eghZ71qb08qmo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg"
+        ]
+      }.to_json
+    end
+
+    before do
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/bomb", count: "5").and_return(double("Faraday::Response", status: 200, body: bomb))
+      stub_const('ENV', { 'MAX_PUGS' => '5' })
+    end
+
+    it "replies with enviroment variable quantity" do
+      expect {
+        send_command("pug bomb 10")
+      }.to change{replies.count}.by(5)
+    end
+  end
+
+  describe "#bomb without limit" do
+    let(:bomb) do
+      {
+        pugs: [
+          "http://28.media.tumblr.com/tumblr_ltef3eghZ71qb08qmo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg",
+          "http://28.media.tumblr.com/tumblr_lk5h7hIRFf1qi4pifo1_500.jpg"
+        ]
+      }.to_json
+    end
+
+    before do
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("http://pugme.herokuapp.com/bomb", count: "10").and_return(double("Faraday::Response", status: 200, body: bomb))
+      stub_const('ENV', { 'MAX_PUGS' => nil })
+    end
+
+    it "replies with n pugs" do
+      expect {
+        send_command("pug bomb 10")
+      }.to change{replies.count}.by(10)
+    end
+  end
+
   describe "#count" do
     let(:count) { '{"pug_count": 298}' }
     before do
@@ -41,7 +97,7 @@ describe Lita::Handlers::Pugbomb, lita_handler: true do
     end
 
     it "replies with the current pug count" do
-      send_command("how many pugs are there") 
+      send_command("how many pugs are there")
       expect(replies.last).to include("There are 298 pugs")
     end
   end
