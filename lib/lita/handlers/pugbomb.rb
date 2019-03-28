@@ -15,7 +15,7 @@ module Lita
       end
 
       def bomb(response)
-        count = response.matches[0][1] || 5
+        count = pug_quantity(response.matches[0][1])
         data = MultiJson.load(http.get(BASE_URL + "/bomb", count: count).body)
         data['pugs'].each do |pug|
           response.reply pug
@@ -27,7 +27,17 @@ module Lita
         pug_count = data['pug_count']
         response.reply "There are #{pug_count} pugs."
       end
+
+      private
+
+      def pug_quantity(quantity)
+        quantity ||= 5
+        return quantity unless ENV['MAX_PUGS']
+
+        quantity.to_i <= ENV['MAX_PUGS'].to_i ? quantity : ENV['MAX_PUGS']
+      end
     end
+
     Lita.register_handler(Pugbomb)
   end
 end
